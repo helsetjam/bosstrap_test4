@@ -1,0 +1,8 @@
+{
+  "standard": "WCAG2AA",
+  "level": "error",
+  "concurrency": 4,
+  "defaults": {
+    "hideElements": ".bd-search, [class*=-success], [class*=-info], [class*=-light]"
+  }
+}
