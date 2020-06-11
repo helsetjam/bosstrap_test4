@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    {{ partial "header" . }}
+  </head>
+  <body class="d-flex flex-column min-vh-100">
+    {{ partialCached "skippy" . }}
+
+    {{ partialCached "docs-navbar" . "404" }}
+
+    <main class="my-auto p-5" id="content">
+      {{ .Content }}
+    </main>
+
+    {{ partialCached "footer" . }}
+    {{ partial "scripts" . }}
+  </body>
+</html>

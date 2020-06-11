@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    {{ partial "header" . }}
+  </head>
+  <body>
+    {{ partialCached "skippy" . }}
+
+    {{ partialCached "docs-navbar" . "home" }}
+
+    {{ partial "home/masthead" . }}
+    {{ partial "home/masthead-followup" . }}
+
+    {{ .Content }}
+
+    {{ partialCached "footer" . }}
+    {{ partial "scripts" . }}
+  </body>
+</html>
