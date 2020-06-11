@@ -1,0 +1,65 @@
+// stylelint-disable selector-no-vendor-prefix
+
+.form-floating {
+  position: relative;
+
+  > label,
+  > .form-control,
+  > .form-select {
+    height: $form-floating-height;
+    padding: $form-floating-padding-y $form-floating-padding-x;
+  }
+
+  > label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 100%;
+    margin-bottom: 0; // Override default `<label>` margin
+    pointer-events: none;
+    cursor: text; // Match the input under the label
+    border: $input-border-width solid transparent;
+    @include border-radius(.25rem);
+    @include transition(all .1s ease-in-out);
+  }
+
+  > .form-control {
+    &::placeholder {
+      color: transparent;
+    }
+
+    &:not(:placeholder-shown) {
+      padding-top: $form-floating-input-padding-t;
+      padding-bottom: $form-floating-input-padding-b;
+    }
+  }
+
+  > .form-select {
+    padding-top: $form-floating-input-padding-t;
+    padding-bottom: $form-floating-input-padding-b;
+  }
+
+  > .form-control:not(:placeholder-shown),
+  > .form-select {
+    ~ label {
+      @include font-size($form-floating-label-font-size);
+      opacity: .65;
+      transform: translate3d(0, -.75rem, 0);
+    }
+  }
+}
+
+
+//
+// Fallback for classic Edge
+//
+
+@supports (-ms-ime-align: auto) {
+  .form-floating > label {
+    display: none;
+  }
+  .form-floating > .form-control::-ms-input-placeholder {
+    color: #777;
+  }
+}
