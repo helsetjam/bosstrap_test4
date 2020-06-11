@@ -1,0 +1,17 @@
+.skippy {
+  position: fixed;
+  top: .75rem;
+  left: .5rem;
+  z-index: 1072;  // over everything in bootstrap (including doc's navbar)
+  padding: .5rem;
+  color: $white;
+  background-color: $bd-purple;
+
+  @include hover() {
+    color: $white;
+  }
+
+  @include hover-focus-active() {
+    position: fixed;
+  }
+}
