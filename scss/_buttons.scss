@@ -1,0 +1,184 @@
+//
+// Base styles
+//
+
+.btn {
+  display: inline-block;
+  padding: $btn-padding-y $btn-padding-x;
+  @include font-size($btn-font-size);
+  font-family: $btn-font-family;
+  font-weight: $btn-font-weight;
+  line-height: $btn-line-height;
+  color: var(--btn-accent-contrast-color);
+  text-align: center;
+  text-decoration: if($link-decoration == none, null, none);
+  white-space: $btn-white-space;
+  vertical-align: middle;
+  cursor: if($enable-pointer-cursor-for-buttons, pointer, null);
+  user-select: none;
+  background-color: var(--btn-accent-color);
+  border: $btn-border-width solid $btn-border-color;
+
+  @include transition($btn-transition);
+  @include gradient-bg();
+  @include border-radius($btn-border-radius, 0); // Manually declare to provide an override to the browser default
+  @include box-shadow($btn-box-shadow);
+
+  &:hover {
+    color: var(--btn-accent-contrast-color);
+    text-decoration: if($link-hover-decoration == underline, none, null);
+  }
+
+  &:focus,
+  &.focus {
+    outline: 0;
+
+    // Avoid using mixin so we can pass custom focus shadow properly
+    @if $enable-shadows {
+      box-shadow: $btn-box-shadow, $btn-focus-box-shadow;
+    } @else {
+      box-shadow: $btn-focus-box-shadow;
+    }
+  }
+
+  &:active,
+  &.active,
+  .show > &.dropdown-toggle {
+    // Remove CSS gradients if they're enabled
+    background-image: if($enable-gradients, none, null);
+    @include box-shadow($btn-active-box-shadow);
+
+    &:focus {
+      @include box-shadow($btn-focus-box-shadow, $btn-active-box-shadow);
+    }
+  }
+
+  &:disabled,
+  &.disabled,
+  fieldset:disabled & { // stylelint-disable-line selector-no-qualifying-type
+    pointer-events: none;
+    // Remove CSS gradients if they're enabled
+    background-image: if($enable-gradients, none, null);
+    opacity: $btn-disabled-opacity;
+    @include box-shadow(none);
+  }
+}
+
+.btn-outline {
+  color: var(--btn-accent-color);
+  background-color: transparent;
+  border-color: currentColor;
+
+  &:hover {
+    background-color: var(--btn-accent-color);
+    border-color: var(--btn-accent-color);
+  }
+
+  &:focus,
+  &.focus {
+    color: var(--btn-accent-contrast-color);
+    background-color: var(--btn-accent-color);
+    border-color: var(--btn-accent-color);
+  }
+
+  &.active,
+  &:active {
+    color: var(--btn-accent-contrast-color);
+    background-color: var(--btn-accent-color);
+    border-color: var(--btn-accent-color);
+  }
+}
+
+//
+// Alternate buttons
+//
+
+@each $color, $value in $theme-colors {
+  .btn-#{$color} {
+    $contrast-color: color-contrast($value);
+
+    --btn-accent-color: #{$value};
+    --btn-accent-contrast-color: #{$contrast-color};
+
+    &:hover {
+      $accent-hover: darken($value, 5%);
+      $accent-hover-contrast-color: color-contrast($accent-hover);
+
+      --btn-accent-color: #{$accent-hover};
+      @if ($contrast-color != $accent-hover-contrast-color) {
+        --btn-accent-contrast-color: #{$accent-hover-contrast-color};
+      }
+    }
+
+    &.active,
+    &:active {
+      $accent-active: darken($value, 15%);
+      $accent-active-contrast-color: color-contrast($accent-active);
+
+      --btn-accent-color: #{$accent-active};
+      @if ($contrast-color != $accent-active-contrast-color) {
+        --btn-accent-contrast-color: #{$accent-active-contrast-color};
+      }
+    }
+  }
+}
+
+//
+// Link buttons
+//
+
+// Make a button look and behave like a link
+.btn-link {
+  font-weight: $font-weight-base;
+  color: $btn-link-color;
+  text-decoration: $link-decoration;
+  border-color: if($btn-border-color != transparent, transparent, null);
+
+  &:hover {
+    color: $btn-link-hover-color;
+    text-decoration: $link-hover-decoration;
+  }
+
+  &:focus,
+  &.focus {
+    text-decoration: $link-hover-decoration;
+    box-shadow: 0 0 0 $btn-focus-offset $body-bg, 0 0 0 $btn-focus-width;
+  }
+
+  &:disabled,
+  &.disabled {
+    color: $btn-link-disabled-color;
+  }
+}
+
+
+//
+// Button Sizes
+//
+
+.btn-sm {
+  padding: $btn-padding-y-sm $btn-padding-x-sm;
+  @include font-size($btn-font-size-sm);
+  @include border-radius($btn-border-radius-sm);
+}
+
+.btn-lg {
+  padding: $btn-padding-y-lg $btn-padding-x-lg;
+  @include font-size($btn-font-size-lg);
+  @include border-radius($btn-border-radius-lg);
+}
+
+
+//
+// Block button
+//
+
+.btn-block {
+  display: block;
+  width: 100%;
+
+  // Vertically space out multiple block buttons
+  + .btn-block {
+    margin-top: $btn-block-spacing-y;
+  }
+}
