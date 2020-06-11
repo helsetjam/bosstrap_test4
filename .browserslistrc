@@ -1,0 +1,11 @@
+# https://github.com/browserslist/browserslist#readme
+
+defaults
+Chrome >= 60
+Firefox >= 60
+iOS >= 10
+Safari >= 10
+Android >= 8
+not Edge < 79
+not Explorer <= 11
+not ExplorerMobile <= 11
